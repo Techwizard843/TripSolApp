@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/gestures.dart';
+import 'package:tripsol_clean/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -123,13 +124,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   const SizedBox(height: 20),
 
-                  // Dummy Google sign-in button
                   ElevatedButton.icon(
                     icon: Image.asset('assets/google_icon.png', height: 24),
                     label: const Text('Sign in with Google'),
-                    onPressed: () {
-                      // Dummy login behavior
-                      Navigator.pushReplacementNamed(context, '/home');
+                    onPressed: () async {
+                      final user = await AuthService().signInWithGoogle();
+                      if (user != null) {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Google Sign-In failed"),
+                          ),
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
@@ -145,8 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 20),
 
                   // Sign Up Text
                   RichText(

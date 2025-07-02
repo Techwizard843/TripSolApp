@@ -188,7 +188,7 @@ class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
                                 )
                               : const Icon(Icons.save),
                           label: Text(
-                            _isSaving ? "Saving..." : "Save Trip",
+                            _isSaving ? "Saving..." : "Trip Details",
                             style: const TextStyle(fontSize: 16),
                           ),
                           style: ElevatedButton.styleFrom(
