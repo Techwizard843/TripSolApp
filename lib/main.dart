@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tripsol_clean/screens/signUp_screen.dart';
 import 'screens/login_screen.dart';
@@ -8,7 +9,9 @@ import 'package:tripsol_clean/screens/profile_page.dart';
 import 'package:tripsol_clean/screens/settings_page.dart';
 import 'package:tripsol_clean/screens/about_app_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const TripSolApp());
 }
 
