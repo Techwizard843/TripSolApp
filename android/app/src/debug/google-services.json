@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "183009155576",
+    "project_id": "tripsol-app",
+    "storage_bucket": "tripsol-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183009155576:android:e54a7174f532ac4dfcde0d",
+        "android_client_info": {
+          "package_name": "com.example.tripsol_clean"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183009155576-627mkhk297mccdfieaue4ibggehiml8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACvNZR5BG4kXQiwbMGN6jSZYxMlzR9K6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183009155576-627mkhk297mccdfieaue4ibggehiml8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183009155576:android:035dc74958a6aa2afcde0d",
+        "android_client_info": {
+          "package_name": "com.example.tripsol_intro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183009155576-627mkhk297mccdfieaue4ibggehiml8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACvNZR5BG4kXQiwbMGN6jSZYxMlzR9K6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183009155576-627mkhk297mccdfieaue4ibggehiml8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183009155576:android:e8dd965e3ba2cb0cfcde0d",
+        "android_client_info": {
+          "package_name": "com.has.tripsol"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183009155576-3totb331dk1eb6t0ke52672kv9lvk6en.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.has.tripsol",
+            "certificate_hash": "a151ec3b96536db3141fc55c8a46992fdbd00ec1"
+          }
+        },
+        {
+          "client_id": "183009155576-627mkhk297mccdfieaue4ibggehiml8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACvNZR5BG4kXQiwbMGN6jSZYxMlzR9K6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183009155576-627mkhk297mccdfieaue4ibggehiml8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
