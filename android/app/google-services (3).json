@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:282023666707:android:f3572fddb41eac86da0be6",
+        "mobilesdk_app_id": "1:282023666707:android:e10d7693c99340eada0be6",
         "android_client_info": {
-          "package_name": "com.example.tripsol_intro"
+          "package_name": "com.example.tripsol_clean"
         }
       },
       "oauth_client": [
