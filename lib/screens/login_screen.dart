@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/gestures.dart';
 import 'package:tripsol_clean/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,15 +18,39 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
-  void _login() {
-    if (_formKey.currentState!.validate()) {
-      print("Email: ${_emailController.text}");
-      print("Password: ${_passwordController.text}");
+  void _login() async {
+  if (_formKey.currentState!.validate()) {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
 
-      // Simulate successful login
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
       Navigator.pushReplacementNamed(context, '/home');
+
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = "Login failed";
+
+      if (e.code == 'user-not-found') {
+        errorMessage = "No user found for that email.";
+      } else if (e.code == 'wrong-password') {
+        errorMessage = "Wrong password provided.";
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(errorMessage)),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Something went wrong")),
+      );
     }
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
