@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "282023666707",
+    "project_id": "tripsol-login",
+    "storage_bucket": "tripsol-login.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282023666707:android:f3572fddb41eac86da0be6",
+        "android_client_info": {
+          "package_name": "com.example.tripsol_intro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282023666707-pq7g7t1qthn0fa5db9tuqf3a0fequgke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWDjDruZ2Tj6ntZVe4-5maMDoZx0j6GwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282023666707-pq7g7t1qthn0fa5db9tuqf3a0fequgke.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
