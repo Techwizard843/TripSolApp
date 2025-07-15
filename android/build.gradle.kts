@@ -1,3 +1,17 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    // Flutter’s Android Gradle plugin:
+    classpath("com.android.tools.build:gradle:7.4.2")
+    // Google services plugin for Firebase:
+    classpath("com.google.gms:google-services:4.3.15")
+  }
+} 
 
 allprojects {
     repositories {

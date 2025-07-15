@@ -26,8 +26,8 @@ android {
         applicationId = "com.example.tripsol_clean"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 23
+        targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -48,7 +48,7 @@ apply(plugin = "com.google.gms.google-services")
 
 dependencies {
     implementation("com.google.firebase:firebase-auth:22.1.2")
-    implementation "com.google.firebase:firebase-analytics"
+    implementation ("com.google.firebase:firebase-analytics")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
 }
