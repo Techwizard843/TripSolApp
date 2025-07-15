@@ -1,0 +1,58 @@
+require('dotenv').config();
+const express = require('express');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const session = require('express-session');
+
+const router = express.Router();
+
+
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+
+
+// Initialize session middleware
+router.use(session({
+  secret: 'your_super_secret_key',
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Initialize passport
+router.use(passport.initialize());
+router.use(passport.session());
+
+// Configure Passport with Google Strategy
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:5001/auth/google/callback",
+
+}, (accessToken, refreshToken, profile, done) => {
+  // Save profile or user data here
+  return done(null, profile);
+}));
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((obj, done) => done(null, obj));
+
+// Routes
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+router.get('/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    // ✅ Successful login
+    res.send(`Hello, ${req.user.displayName}!`);
+  }
+);
+
+router.get('/logout', (req, res) => {
+  req.logout(() => {
+    res.redirect('/');
+  });
+});
+
+module.exports = router;

@@ -1,0 +1,151 @@
+﻿destination,attraction,type,time_required,best_time_to_visit,entry_fee
+Agra (Uttar Pradesh),Taj Mahal,Historical,2-3 hours,Octoberâ€“March,"50 (Indian), 1100 (Foreigner)"
+Agra (Uttar Pradesh),Agra Fort,Historical,2 hours,Octoberâ€“March,"35 (Indian), 550 (Foreigner)"
+Agra (Uttar Pradesh),Fatehpur Sikri,Historical,2-3 hours,Octoberâ€“March,"40 (Indian), 550 (Foreigner)"
+Delhi (Delhi),Red Fort,Historical,2-3 hours,Octoberâ€“March,"35 (Indian), 500 (Foreigner)"
+Delhi (Delhi),Qutub Minar,Historical,1-2 hours,Octoberâ€“March,"30 (Indian), 500 (Foreigner)"
+Delhi (Delhi),India Gate,Monument,1 hour,Octoberâ€“March,Free
+Delhi (Delhi),Humayunâ€™s Tomb,Historical,1-2 hours,Octoberâ€“March,"30 (Indian), 500 (Foreigner)"
+Delhi (Delhi),Jama Masjid,Religious,1 hour,Octoberâ€“March,Free (Camera: 300)
+Delhi (Delhi),Gurudwara Bangla Sahib,Religious,1 hour,Octoberâ€“March,Free
+Jaipur (Rajasthan),Amber Fort,Historical,2-3 hours,Octoberâ€“March,"100 (Indian), 500 (Foreigner)"
+Jaipur (Rajasthan),Hawa Mahal,Historical,1 hour,Octoberâ€“March,"50 (Indian), 200 (Foreigner)"
+Jaipur (Rajasthan),City Palace,Historical,2 hours,Octoberâ€“March,"200 (Indian), 700 (Foreigner)"
+Jaipur (Rajasthan),Jantar Mantar,Historical,1 hour,Octoberâ€“March,"50 (Indian), 200 (Foreigner)"
+Jaipur (Rajasthan),Nahargarh Fort,Historical,2 hours,Octoberâ€“March,"50 (Indian), 200 (Foreigner)"
+Udaipur (Rajasthan),City Palace,Historical,2-3 hours,Octoberâ€“March,"250 (Indian), 500 (Foreigner)"
+Udaipur (Rajasthan),Lake Pichola,Nature,2 hours,Octoberâ€“March,Boat ride: 400-700
+Udaipur (Rajasthan),Jagmandir Island,Island,2 hours,Octoberâ€“March,Boat ride: 450
+Udaipur (Rajasthan),Saheliyon Ki Bari,Garden,1 hour,Octoberâ€“March,"10 (Indian), 50 (Foreigner)"
+Udaipur (Rajasthan),Monsoon Palace,Historical,2 hours,Octoberâ€“March,"110 (Indian), 300 (Foreigner)"
+Jodhpur (Rajasthan),Mehrangarh Fort,Historical,2-3 hours,Octoberâ€“March,"100 (Indian), 600 (Foreigner)"
+Jodhpur (Rajasthan),Umaid Bhawan Palace,Historical,1 hour,Octoberâ€“March,30
+Jodhpur (Rajasthan),Jaswant Thada,Memorial,1 hour,Octoberâ€“March,30
+Jaisalmer (Rajasthan),Jaisalmer Fort,Historical,2-3 hours,Octoberâ€“February,"50 (Indian), 250 (Foreigner)"
+Jaisalmer (Rajasthan),Patwon Ki Haveli,Historical,1-2 hours,Octoberâ€“February,20
+Jaisalmer (Rajasthan),Sam Sand Dunes,Desert,2-3 hours,Octoberâ€“February,Free (Jeep/camel rides extra)
+Amritsar (Punjab),Golden Temple,Religious,2 hours,Octoberâ€“March,Free
+Amritsar (Punjab),Jallianwala Bagh,Memorial,1 hour,Octoberâ€“March,Free
+Amritsar (Punjab),Wagah Border,Event,2 hours,Octoberâ€“March,Free
+Varanasi (Uttar Pradesh),Kashi Vishwanath Temple,Religious,1 hour,Octoberâ€“March,Free
+Varanasi (Uttar Pradesh),Dashashwamedh Ghat,Ghat,1-2 hours,Octoberâ€“March,Free
+Varanasi (Uttar Pradesh),Ramnagar Fort,Historical,2 hours,Octoberâ€“March,20
+Varanasi (Uttar Pradesh),Sarnath,Historical,2 hours,Octoberâ€“March,20
+Mumbai (Maharashtra),Gateway of India,Monument,1 hour,Novemberâ€“February,Free
+Mumbai (Maharashtra),Chhatrapati Shivaji Maharaj Terminus,Historical,1-2 hours,Novemberâ€“February,Free
+Mumbai (Maharashtra),Elephanta Caves,Historical,2-3 hours,Novemberâ€“February,"40 (Indian), 600 (Foreigner)"
+Mumbai (Maharashtra),Marine Drive,Promenade,1 hour,Novemberâ€“February,Free
+Mumbai (Maharashtra),Sanjay Gandhi National Park,Nature,2-3 hours,Novemberâ€“February,150
+Goa (Goa),Baga Beach,Beach,2-4 hours,Novemberâ€“February,Free
+Goa (Goa),Fort Aguada,Historical,1-2 hours,Novemberâ€“February,Free
+Goa (Goa),Chapora Fort,Historical,1-2 hours,Novemberâ€“February,Free
+Goa (Goa),Dudhsagar Waterfalls,Nature,Half day,Novemberâ€“February,Entry + Jeep: 400-500
+Goa (Goa),Basilica of Bom Jesus,Religious,1 hour,Novemberâ€“February,Free
+Alleppey (Kerala),Backwaters,Nature,Half day,Octoberâ€“March,From 1000 (boat ride)
+Alleppey (Kerala),Alleppey Beach,Beach,1-2 hours,Octoberâ€“March,Free
+Alleppey (Kerala),Krishnapuram Palace,Historical,1 hour,Octoberâ€“March,10
+Alleppey (Kerala),Alleppey Lighthouse,Landmark,1 hour,Octoberâ€“March,20
+Alleppey (Kerala),Vembanad Lake,Nature,2 hours,Octoberâ€“March,Free
+Munnar (Kerala),Tea Gardens,Nature,1-2 hours,Septemberâ€“March,Free
+Munnar (Kerala),Eravikulam National Park,Nature,2-3 hours,Septemberâ€“March,"125 (Indian), 420 (Foreigner)"
+Munnar (Kerala),Mattupetty Dam,Nature,1-2 hours,Septemberâ€“March,10
+Rishikesh (Uttarakhand),Laxman Jhula,Landmark,1 hour,Octoberâ€“April,Free
+Rishikesh (Uttarakhand),Triveni Ghat,Religious,1 hour,Octoberâ€“April,Free
+Rishikesh (Uttarakhand),The Beatles Ashram,Historical,2 hours,Octoberâ€“April,150
+Rishikesh (Uttarakhand),White Water Rafting,Adventure,2-3 hours,Octoberâ€“April,600 (approx.)
+Rishikesh (Uttarakhand),Rajaji National Park,Nature,Half day,Novemberâ€“June,800
+Haridwar (Uttarakhand),Har Ki Pauri,Religious,1 hour,Octoberâ€“April,Free
+Haridwar (Uttarakhand),Mansa Devi Temple,Religious,2 hours,Octoberâ€“April,Free (Ropeway: 100)
+Shimla (Himachal Pradesh),The Ridge,Landmark,1 hour,Marchâ€“June,Free
+Shimla (Himachal Pradesh),Jakhoo Hill,Nature/Religious,1-2 hours,Marchâ€“June,Free
+Shimla (Himachal Pradesh),Tara Devi Temple,Religious,1 hour,Marchâ€“June,Free
+Manali (Himachal Pradesh),Hadimba Temple,Religious,1 hour,Marchâ€“June,Free
+Manali (Himachal Pradesh),Solang Valley,Adventure,2-3 hours,Marchâ€“June,Free (activities extra)
+Manali (Himachal Pradesh),Manali Nature Park,Nature,1-2 hours,Marchâ€“June,20
+Ladakh (Ladakh),Pangong Lake,Nature,2-3 hours,Juneâ€“September,Free
+Ladakh (Ladakh),Shanti Stupa,Religious,1 hour,Juneâ€“September,Free
+Ladakh (Ladakh),Leh Palace,Historical,1-2 hours,Juneâ€“September,100
+Kolkata (West Bengal),Victoria Memorial,Historical,2-3 hours,Novemberâ€“February,"20 (Indian), 500 (Foreigner)"
+Kolkata (West Bengal),Howrah Bridge,Landmark,0.5 hour,Novemberâ€“February,Free
+Kolkata (West Bengal),Indian Museum,Museum,2 hours,Novemberâ€“February,"50 (Indian), 500 (Foreigner)"
+Kolkata (West Bengal),Dakshineswar Temple,Religious,1 hour,Novemberâ€“February,Free
+Chennai (Tamil Nadu),Marina Beach,Beach,1-2 hours,Novemberâ€“February,Free
+Chennai (Tamil Nadu),Fort St. George,Historical,1-2 hours,Novemberâ€“February,"15 (Indian), 200 (Foreigner)"
+Chennai (Tamil Nadu),Government Museum,Museum,2 hours,Novemberâ€“February,"30 (Indian), 250 (Foreigner)"
+Chennai (Tamil Nadu),Kapaleeshwarar Temple,Religious,1 hour,Novemberâ€“February,Free
+Hyderabad (Telangana),Charminar,Historical,1 hour,Octoberâ€“March,"20 (Indian), 200 (Foreigner)"
+Hyderabad (Telangana),Golconda Fort,Historical,2-3 hours,Octoberâ€“March,"25 (Indian), 200 (Foreigner)"
+Hyderabad (Telangana),Nehru Zoological Park,Nature,2-3 hours,Octoberâ€“March,75
+Hyderabad (Telangana),Ramoji Film City,Theme Park,Full day,Octoberâ€“March,1350
+Bengaluru (Karnataka),Lalbagh Botanical Garden,Garden,2 hours,Octoberâ€“February,30
+Bengaluru (Karnataka),Bannerghatta National Park,Nature,Half day,Novemberâ€“March,100-400
+Bengaluru (Karnataka),Vidhana Soudha,Landmark,1 hour,Octoberâ€“February,Free
+Bengaluru (Karnataka),Ulsoor Lake,Nature,1-2 hours,Octoberâ€“February,Free
+Bengaluru (Karnataka),Jawaharlal Nehru Planetarium,Museum,1-2 hours,Octoberâ€“February,60
+Mysore (Karnataka),Mysore Palace,Historical,2-3 hours,Octoberâ€“March,"70 (Indian), 200 (Foreigner)"
+Mysore (Karnataka),Brindavan Gardens,Garden,2 hours,Octoberâ€“March,50
+Mysore (Karnataka),Chamundi Hill,Religious,1-2 hours,Octoberâ€“March,Free
+Pune (Maharashtra),Shaniwar Wada,Historical,2 hours,Octoberâ€“March,25
+Pune (Maharashtra),Aga Khan Palace,Historical,2 hours,Octoberâ€“March,25
+Pune (Maharashtra),Sinhagad Fort,Historical,2-3 hours,Octoberâ€“March,20
+Ooty (Tamil Nadu),Botanical Gardens,Garden,2 hours,Aprilâ€“June,30
+Ooty (Tamil Nadu),Doddabetta Peak,Nature,1-2 hours,Aprilâ€“June,10
+Ooty (Tamil Nadu),Ooty Lake,Nature,1-2 hours,Aprilâ€“June,15
+Darjeeling (West Bengal),Tiger Hill,Nature,1-2 hours,Octoberâ€“March,Free
+Darjeeling (West Bengal),Batasia Loop,Landmark,1 hour,Octoberâ€“March,20
+Darjeeling (West Bengal),Himalayan Mountaineering Institute,Museum,2 hours,Octoberâ€“March,40
+Gangtok (Sikkim),MG Marg,Landmark,1-2 hours,Marchâ€“June,Free
+Gangtok (Sikkim),Enchey Monastery,Religious,1 hour,Marchâ€“June,Free
+Gangtok (Sikkim),Tsomgo Lake,Nature,2-3 hours,Marchâ€“June,Free
+Shillong (Meghalaya),Umiam Lake,Nature,2 hours,Octoberâ€“April,20
+Shillong (Meghalaya),Elephant Falls,Nature,1 hour,Octoberâ€“April,30
+Shillong (Meghalaya),Shillong Peak,Nature,1-2 hours,Octoberâ€“April,Free
+Kaziranga (Assam),Kaziranga National Park,Wildlife/National Park,Half day,Novemberâ€“April,"100 (Indian), 650 (Foreigner)"
+Kochi (Kerala),Fort Kochi,Historical,2 hours,Octoberâ€“March,Free
+Kochi (Kerala),Jew Town,Historical,1-2 hours,Octoberâ€“March,Free
+Kochi (Kerala),Mattancherry Palace,Historical,1 hour,Octoberâ€“March,20
+Munnar (Kerala),Tea Plantations,Nature,1-2 hours,Septemberâ€“March,Free
+Munnar (Kerala),Eravikulam National Park,Nature,2-3 hours,Septemberâ€“March,"125 (Indian), 420 (Foreigner)"
+Kanyakumari (Tamil Nadu),Vivekananda Rock Memorial,Landmark,2 hours,Octoberâ€“March,50
+Kanyakumari (Tamil Nadu),Thiruvalluvar Statue,Landmark,1 hour,Octoberâ€“March,20
+Kanyakumari (Tamil Nadu),Kanyakumari Beach,Beach,1-2 hours,Octoberâ€“March,Free
+Rameswaram (Tamil Nadu),Ramanathaswamy Temple,Religious,2 hours,Octoberâ€“March,Free
+Rameswaram (Tamil Nadu),Pamban Bridge,Landmark,1 hour,Octoberâ€“March,Free
+Tirupati (Andhra Pradesh),Tirumala Venkateswara Temple,Religious,2-3 hours,Octoberâ€“March,Free (Special entry: 300)
+Khajuraho (Madhya Pradesh),Western Group of Temples,Heritage/Temple,2-3 hours,Octoberâ€“March,"40 (Indian), 600 (Foreigner)"
+Hampi (Karnataka),Vittala Temple,Heritage,2 hours,Octoberâ€“March,"40 (Indian), 600 (Foreigner)"
+Mahabalipuram (Tamil Nadu),Shore Temple,Heritage/Beach,1-2 hours,Novemberâ€“February,"40 (Indian), 600 (Foreigner)"
+Puducherry (Puducherry),Promenade Beach,Beach,1-2 hours,Novemberâ€“February,Free
+Puducherry (Puducherry),Auroville,Spiritual,2-3 hours,Novemberâ€“February,Free
+Andaman Islands (Andaman and Nicobar Islands),Cellular Jail,Historical,2 hours,Novemberâ€“April,30
+Andaman Islands (Andaman and Nicobar Islands),Radhanagar Beach,Beach,2-3 hours,Novemberâ€“April,Free
+Lakshadweep (Lakshadweep),Agatti Island,Island/Beach,Half day,Octoberâ€“May,Permit + Package
+Diu (Daman and Diu),Nagoa Beach,Beach,2 hours,Octoberâ€“March,Free
+Diu (Daman and Diu),Diu Fort,Historical,1-2 hours,Octoberâ€“March,Free
+Rann of Kutch (Gujarat),White Rann,Desert,Half day,Novemberâ€“February,Entry: 100 (permit required)
+Sundarbans (West Bengal),Sundarbans National Park,Wildlife/National Park,Half day,Novemberâ€“February,"60 (Indian), 200 (Foreigner)"
+Ranthambore (Rajasthan),Ranthambore National Park,Wildlife/National Park,Half day,Octoberâ€“June,"250 (Indian), 1100 (Foreigner)"
+Ranthambore (Rajasthan),Trinetra Ganesh Temple,Religious,1 hour,Octoberâ€“June,Free
+Ranthambore (Rajasthan),Ranthambore Fort,Historical,1-2 hours,Octoberâ€“June,Free
+Gir (Gujarat),Gir National Park,Wildlife/National Park,Half day,Decemberâ€“March,"75 (Indian), 100 (Foreigner)"
+Mount Abu (Rajasthan),Dilwara Temples,Religious,1-2 hours,Octoberâ€“March,Free
+Mount Abu (Rajasthan),Nakki Lake,Nature,1-2 hours,Octoberâ€“March,Free
+Coorg (Karnataka),Abbey Falls,Nature,1 hour,Octoberâ€“March,15
+Coorg (Karnataka),Rajaâ€™s Seat,Landmark,1 hour,Octoberâ€“March,20
+Auli (Uttarakhand),Auli Ski Resort,Ski Resort,Half day,Decemberâ€“February,500 (Ski pass)
+Srinagar (Jammu and Kashmir),Dal Lake,Lake,2-3 hours,Aprilâ€“October,Shikara ride: 500-800
+Srinagar (Jammu and Kashmir),Mughal Gardens,Garden,2 hours,Aprilâ€“October,24
+Gulmarg (Jammu and Kashmir),Gondola Ride,Adventure,2-3 hours,Decemberâ€“March,"780 (Phase 1), 920 (Phase 2)"
+Puri (Odisha),Jagannath Temple,Religious,1-2 hours,Octoberâ€“March,Free
+Puri (Odisha),Puri Beach,Beach,1-2 hours,Octoberâ€“March,Free
+Bhubaneswar (Odisha),Lingaraj Temple,Religious,1-2 hours,Octoberâ€“March,Free
+Bhubaneswar (Odisha),Udayagiri & Khandagiri Caves,Historical,2 hours,Octoberâ€“March,25
+Aurangabad (Maharashtra),Ajanta Caves,Historical,2-3 hours,Novemberâ€“March,"40 (Indian), 600 (Foreigner)"
+Aurangabad (Maharashtra),Ellora Caves,Historical,2-3 hours,Novemberâ€“March,"40 (Indian), 600 (Foreigner)"
+Madurai (Tamil Nadu),Meenakshi Temple,Religious,2 hours,Octoberâ€“March,Free
+Lucknow (Uttar Pradesh),Bara Imambara,Historical,2 hours,Octoberâ€“March,"50 (Indian), 500 (Foreigner)"
+Lucknow (Uttar Pradesh),Chota Imambara,Historical,1-2 hours,Octoberâ€“March,"25 (Indian), 300 (Foreigner)"
+Visakhapatnam (Andhra Pradesh),RK Beach,Beach,1-2 hours,Novemberâ€“February,Free
+Visakhapatnam (Andhra Pradesh),Kailasagiri Hill Park,Nature,2 hours,Novemberâ€“February,20
+Cherrapunjee (Meghalaya),Nohkalikai Falls,Nature,1-2 hours,Octoberâ€“April,20
+Cherrapunjee (Meghalaya),Mawsmai Cave,Nature,1-2 hours,Octoberâ€“April,20

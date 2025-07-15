@@ -1,15 +1,17 @@
 require('dotenv').config();
 const express=require('express');
 const app=express();
+app.use(express.json());
+const authRoutes = require('./Routes/auth');
 const PORT=5001;
 
 
 const {admin,db} =require('./firebaseconfig');
 
-app.use(express.json());
+app.use('/auth', authRoutes);
 
 app.get('/',(req,res)=>{
-    res.send('Intro Page is running');
+    res.send('Welcome to the app. Go to /auth/google to sign in.');
 });
 app.get('/places',(req,res)=>{
     res.send('Places page is running')
@@ -32,6 +34,12 @@ app.post('/train', getTrainData);
 
 const hotel = require('./Routes/hotel');
 app.use('/hotel', hotel);
+
+const recommendation = require('./Routes/recommendation');
+app.use('/recommendation', recommendation);
+
+const tripdetails = require('./Routes/tripdetails');
+app.use('/tripdetails', tripdetails);
 
 app.post('/auth/login',async (req,res)=>{
 
@@ -169,10 +177,7 @@ app.get('/get-trips/:UID',async (req,res)=>{
     const{UID}=req.params;
 
     try{
-        //if(!UID){
-        //    res.status(401).json({error:"UID is not found"})
-        //}
-        
+                
         const tripref = db.collection('trips').where('UID','==',UID);
 
         const tripholder = await tripref.get();
@@ -223,14 +228,7 @@ app.get('/get-trip/:tripId',async (req,res)=>{
             error:"Failed to display trip",
         })
     }
-
-
-
-
-
 })
 
-
-
-
 app.listen(PORT,()=>console.log(`Server started on PORT ${PORT}`))
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);

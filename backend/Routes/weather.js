@@ -56,7 +56,7 @@ router.get('/:city', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const city = req.body.location;
+  const city = req.body.city;
   if (!city) {
     return res.status(400).json({ success: false, message: 'City name is required in the request body.' });
   }
