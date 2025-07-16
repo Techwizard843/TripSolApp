@@ -1,6 +1,8 @@
 require('dotenv').config();
+const cors = require('cors');
 const express=require('express');
 const app=express();
+app.use(cors()); 
 app.use(express.json());
 const authRoutes = require('./Routes/auth');
 const PORT=5001;
@@ -40,44 +42,6 @@ app.use('/recommendation', recommendation);
 
 const tripdetails = require('./Routes/tripdetails');
 app.use('/tripdetails', tripdetails);
-
-app.post('/auth/login',async (req,res)=>{
-
-    const{idToken}=req.body;
-    try{
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
-        const UID = decodedToken.uid;
-        const name = decodedToken.name || "NO NAME";
-        const email = decodedToken.email;
-
-
-        const userref = db.collection('users').doc(UID);
-        const userholder = await userref.get();
-
-        if(!userholder.exists){
-            await userref.set({
-                name,
-                email,
-                createdAt: new Date().toISOString(),
-                trips:[],
-                
-            });
-            return res.status(201).json({
-            message:"User saved successfully",
-            user: { UID, name, email }
-        });
-        }
-        return res.status(200).json({
-            message:"User login successful",
-            user: { UID, name, email }
-        })
-
-}catch(error){
-        console.log("Error in Login");
-        res.status(500).json({error:"Sorry! Couldn't login"});
-
-    }
-})
 
 app.get( '/profile/:UID', async(req,res)=>{
     const{UID}=req.params;
