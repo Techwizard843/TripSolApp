@@ -31,8 +31,8 @@ app.use('/food', food);
 const flight = require('./Routes/flight');
 app.use('/flight', flight);
 
-const {getTrainData} = require('./Routes/train');
-app.post('/train', getTrainData);
+const trainRoute = require('./routes/train'); 
+app.use('/trains', trainRoute);
 
 const hotel = require('./Routes/hotel');
 app.use('/hotel', hotel);
@@ -65,10 +65,8 @@ app.get( '/profile/:UID', async(req,res)=>{
     }
 })
 
-
 app.post('/save-trip',async (req,res)=>{
 
-        console.log("POST /save-trip called");
    try{ const {UID,tripName,startDate,endDate,preferences}=req.body;
 
    if (!UID || !tripName || !startDate || !endDate || !preferences) {
@@ -152,11 +150,9 @@ app.get('/get-trips/:UID',async (req,res)=>{
 
         const trips=[];
 
-        tripholder.forEach(doc =>{
-            trips.push({
-                "tripId":doc.id,...doc.data()
-            });
-        })
+        tripholder.forEach(doc =>
+            trips.push(doc.data())
+        );
 
         res.status(200).json({
             message:"Trips retrieved successfully",
@@ -195,4 +191,3 @@ app.get('/get-trip/:tripId',async (req,res)=>{
 })
 
 app.listen(PORT,()=>console.log(`Server started on PORT ${PORT}`))
-console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
