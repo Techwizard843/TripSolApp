@@ -88,7 +88,7 @@ async function handleHotelRequest(city, res) {
     if (error.message.includes('API credits') || error.message.includes('429')) {
       return res.status(200).json([
         {
-          name: 'Sample Hotel',
+          name: 'Namrit Hotel',
           category: 'Hotel',
           address: '123 Beach Road, Goa',
           map: 'https://www.google.com/maps?q=15.2993,74.124'
