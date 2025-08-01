@@ -31,7 +31,7 @@ app.use('/food', food);
 const flight = require('./Routes/flight');
 app.use('/flight', flight);
 
-const trainRoute = require('./routes/train'); 
+const trainRoute = require('./Routes/train'); 
 app.use('/trains', trainRoute);
 
 const hotel = require('./Routes/hotel');
