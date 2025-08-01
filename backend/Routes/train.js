@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
         from: from,
         to: to,
         departure_time: '20:00',
-        arrival_time: '06:00',
+        arrival_time: '07:00',
       }
     ];
 
