@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
       axios.post('http://localhost:5001/weather', { city: destination }),
       axios.get(`http://localhost:5001/hotel?city=${encodeURIComponent(destination)}`),
       axios.get(`http://localhost:5001/food/${encodeURIComponent(destination)}`),
-      axios.post('http://localhost:8000/search', { userinput: destination }),
+      axios.post('http://localhost:8000/search', {userinput: destination,from, to, date}),
       axios.get(`http://localhost:5001/flights?from=${from}&to=${to}&date=${date || ''}`), // Optional date
       axios.post('http://localhost:5001/trains', { from, to })
     ]);
