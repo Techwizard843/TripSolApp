@@ -76,7 +76,6 @@ router.post('/', async (req, res) => {
     res.status(200).json({
       source: from,
       destination: to,
-      message: 'Returned mock data due to API failure or no results.',
       trains: mockTrainData
     });
   }
