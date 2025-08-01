@@ -1,151 +1,312 @@
-import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../models/place_model.dart';
+import '../models/flight_model.dart';
+import '../models/train_model.dart';
+import '../models/hotel_model.dart';
+import '../models/food_model.dart';
+import '../models/weather_model.dart';
+import '../models/ml_model.dart';
+import '../models/trip_model.dart';
+
+const String baseUrl = 'https://tripsolapp.onrender.com';
 
 class ApiService {
-  // ✅ Get Trip Plan – MOCKED (Fast Response)
-  static Future<Map<String, dynamic>> getTripPlan(String place) async {
-    await Future.delayed(const Duration(seconds: 1));
-    return {
-      'plan': [
-        {
-          'day': 1,
-          'activities': ['Assi Ghat', 'Kashi Vishwanath Temple'],
-        },
-        {
-          'day': 2,
-          'activities': ['Dashashwamedh Ghat', 'Ganga Aarti'],
-        },
-        {
-          'day': 3,
-          'activities': ['Local Food Tour', 'Banarasi Shopping'],
-        },
-      ],
-      'total_budget': 5000,
-      'travel_mode': 'Train',
-    };
+  //Trip APIs
+
+  static Future<Trip> createTrip({
+    required String userId,
+    required String destination,
+    required String startDate,
+    required String endDate,
+  }) async {
+    final url = Uri.parse('$baseUrl/api/trips');
+    final response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "userId": userId,
+        "destination": destination,
+        "startDate": startDate,
+        "endDate": endDate,
+      }),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return Trip.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception("Failed to create trip");
+    }
   }
 
-  // ✅ Save Itinerary – MOCKED
+  //Flight API
+
+  static Future<List<Flight>> getFlights({
+    required String from,
+    required String to,
+    required String date,
+  }) async {
+    final url = Uri.parse('$baseUrl/api/flights?from=$from&to=$to&date=$date');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List data = jsonDecode(response.body);
+      return data.map((e) => Flight.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to fetch flights");
+    }
+  }
+
+  // Train API
+
+  static Future<List<Train>> getTrains({
+    required String from,
+    required String to,
+    required String date,
+  }) async {
+    final url = Uri.parse('$baseUrl/api/trains?from=$from&to=$to&date=$date');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List data = jsonDecode(response.body);
+      return data.map((e) => Train.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to fetch trains");
+    }
+  }
+
+  //Hotel API
+
+  static Future<List<Hotel>> getHotels(String city) async {
+    final url = Uri.parse('$baseUrl/hotels?city=$city');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List data = jsonDecode(response.body);
+      return data.map((e) => Hotel.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to fetch hotels");
+    }
+  }
+
+  //Food API
+
+  static Future<List<FoodPlace>> getFoodSuggestions(String city) async {
+    final url = Uri.parse('$baseUrl/api/food?city=$city');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List data = jsonDecode(response.body);
+      return data.map((e) => FoodPlace.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to fetch food suggestions");
+    }
+  }
+
+  //  Weather API
+
+  static Future<WeatherInfo> getWeather(String city) async {
+    final url = Uri.parse('$baseUrl/api/weather?city=$city');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return WeatherInfo.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception("Failed to fetch weather info");
+    }
+  }
+
+  //ML Recommendations
+
+  /* static Future<List<MLRecommendation>> getMLRecommendations(
+    String tripId,
+  ) async {
+    final url = Uri.parse('$baseUrl/api/ml?tripId=$tripId');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List data = jsonDecode(response.body);
+      return data.map((e) => MLRecommendation.fromJson(e)).toList();
+    } else {
+      throw Exception("Failed to fetch ML recommendations");
+    }
+  }*/
+
+  // Existing (Popular & Custom Recommendations)
+
+  static Future<List<Place>> getRecommendations(String userId) async {
+    final url = Uri.parse('$baseUrl/recommendations?userId=$userId');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((placeJson) => Place.fromJson(placeJson)).toList();
+    } else {
+      throw Exception('Failed to load recommendations');
+    }
+  }
+
+  /*static Future<List<Place>> getPopularPlaces() async {
+    final url = Uri.parse('$baseUrl/api/popular');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((placeJson) => Place.fromJson(placeJson)).toList();
+    } else {
+      throw Exception('Failed to load popular places');
+    }
+  }*/
+
+  // Get Trip Plan
+  static Future<Map<String, dynamic>> getTripPlan(String destination) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/tripdetails'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({"destination": destination}),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load trip details');
+    }
+  }
+
+  // Google OAuth Login
+  static Future<void> loginWithOAuth(
+    String email,
+    String name,
+    String idToken,
+  ) async {
+    final url = Uri.parse('$baseUrl/auth/google');
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'name': name, 'token': idToken}),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to log in via OAuth');
+    }
+
+    print("OAuth Login Success: ${response.body}");
+  }
+
+  // Save Itinerary
   static Future<void> saveItinerary(Map<String, dynamic> itinerary) async {
-    await Future.delayed(const Duration(milliseconds: 800));
-    print("Trip saved successfully (mock).");
+    final url = Uri.parse('$baseUrl/save-trip');
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "UID": itinerary['UID'],
+        "tripName": itinerary['tripName'],
+        "startDate": itinerary['startDate'],
+        "endDate": itinerary['endDate'],
+        "preferences": itinerary['preferences'] ?? {},
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      print("Trip saved successfully!");
+    } else {
+      print("Failed to save trip: ${response.body}");
+    }
   }
 
-  // ✅ Recommended Places – MOCKED
-  static Future<List<Place>> getRecommendedPlaces() async {
-    await Future.delayed(const Duration(milliseconds: 800));
-    return [
-      Place(
-        title: 'Udaipur',
-        description: 'City of Lakes with palaces & boat rides',
-        imageUrl:
-            'https://www.thepinkcityholidays.com/wp-content/uploads/2023/09/Udaipur-Tour-For-5-Days.jpg',
-      ),
-      Place(
-        title: 'Goa',
-        description: 'Beaches, parties, seafood & forts',
-        imageUrl:
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
-      ),
-      Place(
-        title: 'Varanasi',
-        description: 'Ghats, temples, and spiritual vibes',
-        imageUrl: 'https://wallpaperaccess.com/full/4459853.jpg',
-      ),
-    ];
+  // Recommended Places
+  static Future<List<Place>> getRecommendation(String input) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/recommendation'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({"userinput": input}),
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => Place.fromJson(json)).toList();
+    } else {
+      throw Exception("Failed to get recommendations");
+    }
   }
 
-  // ✅ Customize Trip – MOCKED
+  // Popular Places
+  static Future<List<Place>> getPopularPlace() async {
+    final url = Uri.parse('$baseUrl/api/popular');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Place.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load popular places');
+    }
+  }
+
+  // Customize Trip
   static Future<Map<String, dynamic>> customizeTripPlan(
+    String tripId,
     Map<String, dynamic> customizationData,
   ) async {
-    await Future.delayed(const Duration(seconds: 1));
-    return {
-      "plan": [
-        {
-          "day": 1,
-          "activities": ["Custom Place 1", "Custom Place 2"],
-        },
-        {
-          "day": 2,
-          "activities": ["Custom Place 3", "Custom Place 4"],
-        },
-      ],
-      "total_budget": customizationData['budget'],
-      "travel_mode": customizationData['travel_mode'],
-      "start_date": customizationData['start_date'],
-      "end_date": customizationData['end_date'],
-    };
-  }
-
-  // ✅ Delete Trip – MOCKED
-  static Future<void> deleteTrip(String place, String user) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    print("Deleted trip for $place by $user (mock)");
-  }
-
-  // ✅ Get Saved Trips – MOCKED
-  static Future<List<Map<String, dynamic>>> getSavedTrips(
-    String userEmail,
-  ) async {
-    await Future.delayed(const Duration(milliseconds: 700));
-    return [
-      {
-        "place": "Udaipur",
-        "user": userEmail,
-        "plan": [
-          {
-            "day": 1,
-            "activities": ["City Palace", "Lake Pichola"],
-          },
-          {
-            "day": 2,
-            "activities": ["Fateh Sagar", "Shopping"],
-          },
-        ],
-        "total_budget": 7000,
-        "travel_mode": "Train",
-        "start_date": "2025-07-10",
-        "end_date": "2025-07-12",
-      },
-      {
-        "place": "Goa",
-        "user": userEmail,
-        "plan": [
-          {
-            "day": 1,
-            "activities": ["Baga Beach", "Anjuna Beach"],
-          },
-          {
-            "day": 2,
-            "activities": ["Fort Aguada", "Calangute Market"],
-          },
-        ],
-        "total_budget": 8500,
-        "travel_mode": "Flight",
-        "start_date": "2025-08-05",
-        "end_date": "2025-08-07",
-      },
-    ];
-  }
-}
-
-// ✅ Simple Place Model
-class Place {
-  final String title;
-  final String description;
-  final String imageUrl;
-
-  Place({
-    required this.title,
-    required this.description,
-    required this.imageUrl,
-  });
-
-  factory Place.fromJson(Map<String, dynamic> json) {
-    return Place(
-      title: json['title'],
-      description: json['description'],
-      imageUrl: json['imageUrl'],
+    final response = await http.patch(
+      Uri.parse('$baseUrl/customize-trip/$tripId'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(customizationData),
     );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to customize trip');
+    }
+  }
+
+  // Delete Trip
+  static Future<void> deleteTrip(String tripId) async {
+    final response = await http.delete(
+      Uri.parse('$baseUrl/delete-trip/$tripId'),
+    );
+
+    if (response.statusCode == 200) {
+      print("Trip deleted successfully");
+    } else {
+      throw Exception("Failed to delete trip");
+    }
+  }
+
+  // Get Saved Trips
+  static Future<List<Map<String, dynamic>>> getSavedTrips(String uid) async {
+    final response = await http.get(Uri.parse('$baseUrl/get-trips/$uid'));
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return List<Map<String, dynamic>>.from(data['trips']);
+    } else {
+      throw Exception('Failed to load saved trips');
+    }
+  }
+
+  //Get Trip by ID
+  static Future<Map<String, dynamic>?> getTripById(String tripId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/get-trip/$tripId'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        return responseData['trip']; // Trip data is inside the 'trip' key
+      } else {
+        print('Failed to get trip. Status code: ${response.statusCode}');
+        print('Body: ${response.body}');
+        return null;
+      }
+    } catch (e) {
+      print('Error while fetching trip: $e');
+      return null;
+    }
   }
 }
