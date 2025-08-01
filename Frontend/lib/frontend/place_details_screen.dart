@@ -1,242 +1,267 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../services/api_services.dart';
-import 'trip_customization_page.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:flutter/services.dart';
+import '../models/place_model.dart';
 
-class PlaceDetailsPage extends StatefulWidget {
-  final String placeName;
-  const PlaceDetailsPage({super.key, required this.placeName});
+class PlaceDetailsPage extends StatelessWidget {
+  final Place place;
 
-  @override
-  State<PlaceDetailsPage> createState() => _PlaceDetailsPageState();
-}
-
-class _PlaceDetailsPageState extends State<PlaceDetailsPage> {
-  Map<String, dynamic> tripPlan = {};
-  bool isLoading = true;
-  bool _isSaving = false;
-  String? errorMessage;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchTripPlan();
-  }
-
-  Future<void> fetchTripPlan() async {
-    try {
-      final plan = await ApiService.getTripPlan(widget.placeName);
-      setState(() {
-        tripPlan = plan;
-        isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-        errorMessage = 'Failed to fetch trip plan.';
-      });
-    }
-  }
-
-  void saveItinerary() async {
-    setState(() => _isSaving = true);
-    final data = {
-      'place': widget.placeName,
-      'user': 'hasini@gmail.com',
-      'plan': tripPlan,
-    };
-
-    try {
-      await ApiService.saveItinerary(data);
-      showDialog(
-        context: context,
-        builder: (context) => const AlertDialog(
-          title: Text("Success"),
-          content: Text("Trip saved successfully!"),
-        ),
-      );
-    } catch (_) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Error saving trip.")));
-    } finally {
-      setState(() => _isSaving = false);
-    }
-  }
+  const PlaceDetailsPage({super.key, required this.place});
 
   @override
   Widget build(BuildContext context) {
-    final planList = tripPlan['plan'] as List<dynamic>? ?? [];
-    final imageUrl =
-        tripPlan['image_url'] ??
-        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e'; // fallback
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.placeName),
-        backgroundColor: Colors.teal,
+        title: Text(
+          place.title,
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.w600,
+            fontSize: 22,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 1,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : errorMessage != null
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.error, size: 48, color: Colors.red),
-                  const SizedBox(height: 10),
-                  Text(errorMessage!, style: const TextStyle(fontSize: 16)),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: fetchTripPlan,
-                    child: const Text("Retry"),
-                  ),
-                ],
-              ),
-            )
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Hero(
+                  tag: place.imageUrl,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(24),
+                    ),
                     child: Image.network(
-                      imageUrl,
-                      height: 200,
+                      place.imageUrl,
+                      height: 240,
                       width: double.infinity,
                       fit: BoxFit.cover,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            height: 240,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: const BorderRadius.vertical(
+                                bottom: Radius.circular(24),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    "Trip Plan",
-                    style: GoogleFonts.poppins(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.teal[800],
+                ),
+                Positioned(
+                  bottom: 10,
+                  left: 16,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      place.title,
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  ...planList.map((day) {
-                    return Card(
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                "Trip Plan",
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: place.tripPlan.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 4),
+                            child: const Icon(
+                              Icons.calendar_today,
+                              size: 20,
+                              color: Colors.deepPurple,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              place.tripPlan[index],
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                "Travel Info",
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Card(
                       elevation: 3,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                      margin: const EdgeInsets.symmetric(vertical: 8),
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(14.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            const CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.deepPurpleAccent,
+                              child: Icon(
+                                Icons.money,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
                             Text(
-                              "Day ${day['day']}",
+                              "Budget",
                               style: GoogleFonts.poppins(
-                                fontSize: 18,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            const SizedBox(height: 6),
+                            const SizedBox(height: 4),
                             Text(
-                              (day['activities'] as List).join(", "),
-                              style: GoogleFonts.poppins(fontSize: 15),
+                              place.budget,
+                              style: const TextStyle(fontSize: 14),
                             ),
                           ],
                         ),
                       ),
-                    );
-                  }).toList(),
-                  const SizedBox(height: 16),
-                  if (tripPlan.containsKey('total_budget'))
-                    Row(
-                      children: [
-                        const Icon(Icons.attach_money, color: Colors.green),
-                        const SizedBox(width: 8),
-                        Text(
-                          "Budget: ₹${tripPlan['total_budget']}",
-                          style: GoogleFonts.poppins(fontSize: 16),
-                        ),
-                      ],
                     ),
-                  const SizedBox(height: 8),
-                  if (tripPlan.containsKey('travel_mode'))
-                    Row(
-                      children: [
-                        const Icon(Icons.directions_bus, color: Colors.blue),
-                        const SizedBox(width: 8),
-                        Text(
-                          "Travel Mode: ${tripPlan['travel_mode']}",
-                          style: GoogleFonts.poppins(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  const SizedBox(height: 30),
-                  Center(
-                    child: Column(
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: _isSaving ? null : saveItinerary,
-                          icon: _isSaving
-                              ? const SizedBox(
-                                  height: 16,
-                                  width: 16,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2.5,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Icon(Icons.save),
-                          label: Text(
-                            _isSaving ? "Saving..." : "Trip Details",
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 40,
-                              vertical: 14,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            elevation: 4,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TripCustomizationPage(
-                                  placeName: widget.placeName,
-                                ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Card(
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: Column(
+                          children: [
+                            const CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.lightBlueAccent,
+                              child: Icon(
+                                Icons.directions_car,
+                                color: Colors.white,
+                                size: 20,
                               ),
-                            );
-                          },
-                          icon: const Icon(Icons.tune),
-                          label: const Text("Customize Trip"),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.teal[300],
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 14,
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                            const SizedBox(height: 8),
+                            Text(
+                              "Travel Mode",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                            elevation: 4,
-                          ),
+                            const SizedBox(height: 4),
+                            Text(
+                              place.travelMode,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(height: 30),
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  HapticFeedback.lightImpact();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Explore feature coming soon!'),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.explore),
+                label: const Text("Explore More"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurpleAccent,
+                  foregroundColor: Colors.white,
+                  elevation: 6,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 16,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+          ],
+        ),
+      ),
     );
   }
 }

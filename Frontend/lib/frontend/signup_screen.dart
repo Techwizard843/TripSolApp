@@ -24,7 +24,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print("Email: ${_emailController.text}");
       print("Password: ${_passwordController.text}");
 
-      // Simulate successful sign up
       Navigator.pushReplacementNamed(context, '/home');
     }
   }

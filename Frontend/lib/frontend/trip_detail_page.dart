@@ -58,10 +58,7 @@ class TripDetailPage extends StatelessWidget {
 
     if (confirmed == true) {
       try {
-        await ApiService.deleteTrip(
-          trip['place'],
-          "hasini@gmail.com",
-        ); // update email accordingly
+        await ApiService.deleteTrip(trip['place']); // update email accordingly
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text("Trip deleted")));
