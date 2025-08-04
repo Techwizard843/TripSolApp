@@ -1,6 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
+
+console.log("Client ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
+console.log("Callback URL:", process.env.GOOGLE_CALLBACK_URL);
+
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
 

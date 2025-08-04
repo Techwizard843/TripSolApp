@@ -76,9 +76,9 @@ async function fetchFlightsWithRetry(path, retries = MAX_RETRIES) {
   });
 }
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const { from, to, date } = req.query;
+  let { userinput, from, to, date } = req.body;
 
     if (!from || !to) {
       return res.status(400).json({ error: "Please provide both 'from' and 'to' IATA codes" });
@@ -95,20 +95,20 @@ router.get('/', async (req, res) => {
         {
           flight_number: 'AI203',
           airline: 'Air India',
-          from: from,
-          to: to,
+          departure_airport: from,
+          arrival_airport: to,
           departure_time: '10:00',
           arrival_time: '12:30',
-          duration: '2h 30m',
+          status: 'Scheduled',
         },
         {
           flight_number: '6E509',
           airline: 'IndiGo',
-          from: from,
-          to: to,
+          departure_airport: from,
+          arrival_airport: to,
           departure_time: '15:00',
           arrival_time: '17:30',
-          duration: '2h 30m',
+          status: 'Scheduled',
         },
       ];
 
