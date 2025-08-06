@@ -37,8 +37,6 @@ app.use('/trains', trainRoute);
 const hotel = require('./Routes/hotel');
 app.use('/hotel', hotel);
 
-const recommendation = require('./Routes/recommendation');
-app.use('/recommendation', recommendation);
 
 const tripdetails = require('./Routes/tripdetails');
 app.use('/tripdetails', tripdetails);

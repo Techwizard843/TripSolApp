@@ -3,8 +3,12 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+from recommender import Recommender
+
 
 app = FastAPI() 
+recommender = Recommender()
+
 
 import pandas as pd
 import numpy as np
@@ -60,6 +64,7 @@ class Query(BaseModel):
 @app.post("/search")
 def usersearch(query: Query):
     userinput = query.userinput.strip().lower()
+    recommender.add(userinput)
 
     dres = dembedding.search(userinput, 1)
     tres = tembedding.search(userinput, 1)
@@ -75,3 +80,8 @@ def usersearch(query: Query):
         return recommendation(tmatch)
     else:
         return {"error": "No confident match found."}
+    
+@app.get("/recommend")
+def recommend_home():
+    results = recommender.recommend()  
+    return {"recommendations": results}

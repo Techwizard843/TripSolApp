@@ -14,12 +14,14 @@ class Recommender:
     def _load_searches(self):
         if not os.path.exists(self.searchdata):
             return []
+        seen = set()
         with open(self.searchdata, 'r') as f:
-            return [line.strip() for line in f if line.strip()]
-
+            return [line.strip() for line in f if line.strip() and not (line.strip() in seen or seen.add(line.strip()))]
+    
     def _save_search(self, query):
-        with open(self.searchdata, 'a') as f:
-            f.write(query + '\n')
+        if query not in self.searches:
+            with open(self.searchdata, 'a') as f:
+                f.write(query + '\n')
 
     def _update_vectors(self):
         if self.searches:
@@ -27,18 +29,18 @@ class Recommender:
         else:
             self.vectors = None
 
-    def add(self, query):
-        self.searches.append(query)
-        self._save_search(query)
-        self._update_vectors()
+    def clean_query(self, query):
+        return ' '.join(query.lower().strip().split())
 
-    def recommend(self, query=None, top_n=5):
-        if not self.vectors or not query:
-            return []
-        vec = self.vectorizer.transform([query])
-        scores = cosine_similarity(vec, self.vectors).flatten()
-        indices = scores.argsort()[::-1]
-        return [self.searches[i] for i in indices if self.searches[i] != query][:top_n]
+    def add(self, query):
+        query = self.clean_query(query)
+        if query not in self.searches:
+            self.searches.append(query)
+            self._save_search(query)
+            self._update_vectors()
+
+    def recommend(self, top_n=5):
+        return self.searches[-top_n:][::-1]
 
 if __name__ == "__main__":
     action = sys.argv[1]
@@ -49,5 +51,6 @@ if __name__ == "__main__":
     if action == 'add':
         r.add(query)
     elif action == 'recommend':
+        top_n = int(query) if query.isdigit() else 5
         result = r.recommend(query)
         print(json.dumps(result))
