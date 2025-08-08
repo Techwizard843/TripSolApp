@@ -15,12 +15,12 @@ class Recommender:
         if not os.path.exists(self.searchdata):
             return []
         seen = set()
-        with open(self.searchdata, 'r') as f:
+        with open(self.searchdata, 'r', encoding='utf-8') as f:
             return [line.strip() for line in f if line.strip() and not (line.strip() in seen or seen.add(line.strip()))]
     
     def _save_search(self, query):
         if query not in self.searches:
-            with open(self.searchdata, 'a') as f:
+            with open(self.searchdata, 'a', encoding='utf-8') as f:
                 f.write(query + '\n')
 
     def _update_vectors(self):
@@ -42,7 +42,12 @@ class Recommender:
     def recommend(self, top_n=5):
         return self.searches[-top_n:][::-1]
 
+
 if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print("Usage: python recommender.py <add/recommend> <query/top_n>")
+        sys.exit(1)
+
     action = sys.argv[1]
     query = sys.argv[2]
 
@@ -52,5 +57,7 @@ if __name__ == "__main__":
         r.add(query)
     elif action == 'recommend':
         top_n = int(query) if query.isdigit() else 5
-        result = r.recommend(query)
+        result = r.recommend(top_n)
         print(json.dumps(result))
+    else:
+        print(f"Unknown action: {action}")

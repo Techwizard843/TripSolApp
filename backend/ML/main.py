@@ -1,21 +1,19 @@
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from recommender import Recommender
-
-
-app = FastAPI() 
-recommender = Recommender()
-
-
 import pandas as pd
-import numpy as np
-import txtai
 from txtai.embeddings import Embeddings
 from rapidfuzz import process
+import requests
 
+# Hardcoded ML server URL (no environment variable)
+ML_SERVER_URL = "https://tripsolapp-ml.onrender.com"
+
+app = FastAPI()
+recommender = Recommender()
 
 BASE_DIR = os.path.dirname(__file__)
 df2_path = os.path.join(BASE_DIR, "data", "indiadata.csv")
@@ -35,7 +33,7 @@ dembedding.index(dest)
 def recommendation(typewise):
     result = tembedding.search(typewise, 1)
     if not result:
-        return "No matching category found."
+        return {"error": "No matching category found."}
 
     typematch = types[result[0][0]]
     destypes = df[df['type'].str.lower() == typematch.lower()]
@@ -48,7 +46,7 @@ def recommend(citywise):
         if score > 80:
             city = match
         else:
-            return "No matching category found."
+            return {"error": "No matching category found."}
     else:
         city = dest[result2[0][0]]
 
@@ -66,6 +64,17 @@ def usersearch(query: Query):
     userinput = query.userinput.strip().lower()
     recommender.add(userinput)
 
+    try:
+        ml_response = requests.post(
+            f"{ML_SERVER_URL}/search",
+            json={"userinput": userinput},
+            timeout=5
+        )
+        if ml_response.status_code == 200:
+            return ml_response.json()
+    except Exception:
+        pass  # fallback to local processing if ML server unreachable
+
     dres = dembedding.search(userinput, 1)
     tres = tembedding.search(userinput, 1)
 
@@ -80,8 +89,12 @@ def usersearch(query: Query):
         return recommendation(tmatch)
     else:
         return {"error": "No confident match found."}
-    
+
 @app.get("/recommend")
 def recommend_home():
-    results = recommender.recommend()  
+    results = recommender.recommend()
     return {"recommendations": results}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
