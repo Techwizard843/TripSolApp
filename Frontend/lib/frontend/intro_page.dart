@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripsol_clean/screens/login_screen.dart';
+import 'package:tripsol_clean/frontend/login_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 

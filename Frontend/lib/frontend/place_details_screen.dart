@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter/services.dart';
-import '../models/place_model.dart';
+import '../frontend/models/place_model.dart';
 
 class PlaceDetailsPage extends StatelessWidget {
   final Place place;

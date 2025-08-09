@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tripsol_clean/screens/signUp_screen.dart';
-import 'package:tripsol_clean/screens/login_screen.dart';
-import 'package:tripsol_clean/screens/intro_page.dart';
-import 'package:tripsol_clean/screens/home_screen.dart';
-import 'package:tripsol_clean/screens/saved_trips_page.dart';
-import 'package:tripsol_clean/screens/profile_page.dart';
-import 'package:tripsol_clean/screens/settings_page.dart';
-import 'package:tripsol_clean/screens/about_app_page.dart';
+import 'package:tripsol_clean/frontend/signUp_screen.dart';
+import 'package:tripsol_clean/frontend/login_screen.dart';
+import 'package:tripsol_clean/frontend/intro_page.dart';
+import 'package:tripsol_clean/frontend/home_screen.dart';
+import 'package:tripsol_clean/frontend/saved_trips_page.dart';
+import 'package:tripsol_clean/frontend/profile_page.dart';
+import 'package:tripsol_clean/frontend/settings_page.dart';
+import 'package:tripsol_clean/frontend/about_app_page.dart';
 
 const enableFirebase = false;
 

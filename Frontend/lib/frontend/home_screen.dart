@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../services/api_services.dart';
 import 'place_details_screen.dart';
 import 'saved_trips_page.dart';
-import 'package:tripsol_clean/screens/profile_page.dart';
-import 'package:tripsol_clean/screens/place_card.dart';
-import '../models/place_model.dart';
+import 'package:tripsol_clean/frontend/profile_page.dart';
+import 'package:tripsol_clean/frontend/place_card.dart';
+import '../frontend/models/place_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

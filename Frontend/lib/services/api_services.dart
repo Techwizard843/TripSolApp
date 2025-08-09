@@ -1,20 +1,20 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../models/place_model.dart';
-import '../models/flight_model.dart';
-import '../models/train_model.dart';
-import '../models/hotel_model.dart';
-import '../models/food_model.dart';
-import '../models/weather_model.dart';
-import '../models/ml_model.dart';
-import '../models/trip_model.dart';
+import '../frontend/models/place_model.dart';
+import '../frontend/models/flight_model.dart';
+import '../frontend/models/train_model.dart';
+import '../frontend/models/hotel_model.dart';
+import '../frontend/models/food_model.dart';
+import '../frontend/models/weather_model.dart';
+import '../frontend/models/ml_model.dart';
+import '../frontend/models/trip_model.dart';
 
 const String baseUrl = 'https://tripsolapp.onrender.com';
 
 class ApiService {
   //Trip APIs
 
-  static Future<Trip> createTrip({
+  /*  static Future<Trip> createTrip({
     required String userId,
     required String destination,
     required String startDate,
@@ -36,6 +36,38 @@ class ApiService {
       return Trip.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("Failed to create trip");
+    }
+  }*/
+  Future<List<Recommendation>> getSearch(
+    String userInput,
+    String from,
+    String to,
+    String date,
+  ) async {
+    try {
+      final url = Uri.parse('https://4deab0d6ef71.ngrok-free.app/search');
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "userinput": userInput,
+          "from": from,
+          "to": to,
+          "date": date,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        return data.map((item) => Recommendation.fromJson(item)).toList();
+      } else {
+        throw Exception(
+          'Failed to load search results: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      print("Error fetching search results: $e");
+      return [];
     }
   }
 
@@ -91,13 +123,13 @@ class ApiService {
 
   //Food API
 
-  static Future<List<FoodPlace>> getFoodSuggestions(String city) async {
+  static Future<List<Food>> getFoodSuggestions(String city) async {
     final url = Uri.parse('$baseUrl/api/food?city=$city');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final List data = jsonDecode(response.body);
-      return data.map((e) => FoodPlace.fromJson(e)).toList();
+      return data.map((e) => Food.fromJson(e)).toList();
     } else {
       throw Exception("Failed to fetch food suggestions");
     }
@@ -105,12 +137,12 @@ class ApiService {
 
   //  Weather API
 
-  static Future<WeatherInfo> getWeather(String city) async {
+  static Future<Weather> getWeather(String city) async {
     final url = Uri.parse('$baseUrl/api/weather?city=$city');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      return WeatherInfo.fromJson(jsonDecode(response.body));
+      return Weather.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("Failed to fetch weather info");
     }
@@ -133,18 +165,6 @@ class ApiService {
   }*/
 
   // Existing (Popular & Custom Recommendations)
-
-  static Future<List<Place>> getRecommendations(String userId) async {
-    final url = Uri.parse('$baseUrl/recommendations?userId=$userId');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      return data.map((placeJson) => Place.fromJson(placeJson)).toList();
-    } else {
-      throw Exception('Failed to load recommendations');
-    }
-  }
 
   /*static Future<List<Place>> getPopularPlaces() async {
     final url = Uri.parse('$baseUrl/api/popular');
@@ -217,23 +237,7 @@ class ApiService {
     }
   }
 
-  // Recommended Places
-  static Future<List<Place>> getRecommendation(String input) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/recommendation'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({"userinput": input}),
-    );
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      return data.map((json) => Place.fromJson(json)).toList();
-    } else {
-      throw Exception("Failed to get recommendations");
-    }
-  }
-
-  // Popular Places
+  /*// Popular Places
   static Future<List<Place>> getPopularPlace() async {
     final url = Uri.parse('$baseUrl/api/popular');
     final response = await http.get(url);
@@ -243,7 +247,7 @@ class ApiService {
     } else {
       throw Exception('Failed to load popular places');
     }
-  }
+  }*/
 
   // Customize Trip
   static Future<Map<String, dynamic>> customizeTripPlan(
@@ -288,6 +292,18 @@ class ApiService {
     }
   }
 
+  static Future<List<Place>> getRecommendations(String userId) async {
+    final url = Uri.parse('$baseUrl/recommendation');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      return data.map((placeJson) => Place.fromJson(placeJson)).toList();
+    } else {
+      throw Exception('Failed to load recommendations');
+    }
+  }
+
   //Get Trip by ID
   static Future<Map<String, dynamic>?> getTripById(String tripId) async {
     try {
@@ -298,7 +314,7 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        return responseData['trip']; // Trip data is inside the 'trip' key
+        return responseData['trip']; // Assumes response is wrapped in 'trip' key
       } else {
         print('Failed to get trip. Status code: ${response.statusCode}');
         print('Body: ${response.body}');
