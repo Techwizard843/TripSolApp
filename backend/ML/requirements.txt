@@ -6,4 +6,4 @@ rapidfuzz==3.1.1
 requests==2.31.0
 scikit-learn==1.4.0
 huggingface_hub==0.13.4
-txtai==<latest-compatible-version>
+txtai==6.2.0
