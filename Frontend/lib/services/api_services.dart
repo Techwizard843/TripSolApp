@@ -12,6 +12,8 @@ import '../frontend/models/trip_model.dart';
 const String baseUrl = 'https://tripsolapp.onrender.com';
 
 class ApiService {
+  static const String baseUrl = 'http://10.0.2.2:5001';
+
   //Trip APIs
 
   /*  static Future<Trip> createTrip({
@@ -237,7 +239,7 @@ class ApiService {
     }
   }
 
-  /*// Popular Places
+  // Popular Places
   static Future<List<Place>> getPopularPlace() async {
     final url = Uri.parse('$baseUrl/api/popular');
     final response = await http.get(url);
@@ -247,7 +249,7 @@ class ApiService {
     } else {
       throw Exception('Failed to load popular places');
     }
-  }*/
+  }
 
   // Customize Trip
   static Future<Map<String, dynamic>> customizeTripPlan(
@@ -282,13 +284,24 @@ class ApiService {
 
   // Get Saved Trips
   static Future<List<Map<String, dynamic>>> getSavedTrips(String uid) async {
-    final response = await http.get(Uri.parse('$baseUrl/get-trips/$uid'));
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/get-trips/$uid'));
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return List<Map<String, dynamic>>.from(data['trips']);
-    } else {
-      throw Exception('Failed to load saved trips');
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        if (data != null && data['trips'] is List) {
+          return List<Map<String, dynamic>>.from(data['trips']);
+        } else {
+          throw Exception('Invalid data format received from server');
+        }
+      } else {
+        throw Exception('Failed to load saved trips: ${response.statusCode}');
+      }
+    } catch (e, stacktrace) {
+      print('Error in getSavedTrips: $e');
+      print('Stacktrace: $stacktrace');
+      rethrow; // Let the caller handle the exception as well
     }
   }
 

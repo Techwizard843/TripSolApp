@@ -27,16 +27,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchData() async {
+    setState(() {
+      _isLoading = true;
+      _hasError = false;
+    });
+
     try {
       final recs = await ApiService.getRecommendations("top");
+      final popular =
+          await ApiService.getPopularPlace(); // Add this method if exists
 
       setState(() {
         _recommendations = recs;
-
+        _popularPlaces = popular;
         _isLoading = false;
+        _hasError = false;
       });
     } catch (e) {
-      print('Error fetching data: \$e');
+      print('Error fetching data: $e'); // Fixed print here
+
       setState(() {
         _hasError = true;
         _isLoading = false;
