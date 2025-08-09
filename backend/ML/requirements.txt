@@ -1,7 +1,8 @@
-fastapi
-uvicorn
-scikit-learn
-pandas
-numpy
-txtai
-rapidfuzz
+fastapi==0.110.0
+uvicorn==0.29.0
+pandas==2.2.2
+txtai==6.2.0
+sentence-transformers==2.2.2
+rapidfuzz==3.1.1
+requests==2.31.0
+scikit-learn==1.4.0
