@@ -2,8 +2,6 @@ const express = require('express');
 const axios = require('axios');
 
 const router = express.Router();
-const ML_SERVER_URL = 'https://tripsolapp-ml.onrender.com';
-
 
 router.post('/', async (req, res) => {
   const { destination, from, to, date } = req.body;
@@ -17,7 +15,7 @@ router.post('/', async (req, res) => {
       axios.post('http://localhost:5001/weather', { city: destination }),
       axios.get(`http://localhost:5001/hotel?city=${encodeURIComponent(destination)}`),
       axios.get(`http://localhost:5001/food/${encodeURIComponent(destination)}`),
-      axios.post(`${ML_SERVER_URL}/search`, { userinput: destination, from, to, date }),
+      axios.post(`https://4deab0d6ef71.ngrok-free.app/search`, { userinput: destination, from, to, date }),
       axios.post(`http://localhost:5001/flight`, { userinput: destination, from, to, date }),
       axios.post('http://localhost:5001/trains', { from, to })
     ]);

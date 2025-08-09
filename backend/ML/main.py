@@ -9,7 +9,6 @@ from txtai.embeddings import Embeddings
 from rapidfuzz import process
 import requests
 
-# Hardcoded ML server URL (no environment variable)
 ML_SERVER_URL = "https://tripsolapp-ml.onrender.com"
 
 app = FastAPI()
@@ -73,7 +72,7 @@ def usersearch(query: Query):
         if ml_response.status_code == 200:
             return ml_response.json()
     except Exception:
-        pass  # fallback to local processing if ML server unreachable
+        pass  
 
     dres = dembedding.search(userinput, 1)
     tres = tembedding.search(userinput, 1)
