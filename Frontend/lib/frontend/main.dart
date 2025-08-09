@@ -1,21 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:tripsol_clean/frontend/signUp_screen.dart';
-import 'package:tripsol_clean/frontend/login_screen.dart';
-import 'package:tripsol_clean/frontend/intro_page.dart';
-import 'package:tripsol_clean/frontend/home_screen.dart';
+import '../frontend/login_screen.dart';
+import '../frontend/intro_page.dart';
+import '../frontend/home_screen.dart';
 import 'package:tripsol_clean/frontend/saved_trips_page.dart';
 import 'package:tripsol_clean/frontend/profile_page.dart';
 import 'package:tripsol_clean/frontend/settings_page.dart';
 import 'package:tripsol_clean/frontend/about_app_page.dart';
 
-const enableFirebase = false;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (enableFirebase) {
-    await Firebase.initializeApp();
-  }
+  await Firebase.initializeApp();
   runApp(const TripSolApp());
 }
 

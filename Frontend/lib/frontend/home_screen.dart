@@ -29,10 +29,10 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchData() async {
     try {
       final recs = await ApiService.getRecommendations("top");
-      final popular = await ApiService.getPopularPlace();
+
       setState(() {
         _recommendations = recs;
-        _popularPlaces = popular;
+
         _isLoading = false;
       });
     } catch (e) {
