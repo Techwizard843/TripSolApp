@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../services/api_services.dart';
 import 'place_details_screen.dart';
 import 'saved_trips_page.dart';
-import 'package:tripsol_clean/screens/profile_page.dart';
-import '../widgets/place_card.dart';
+import 'package:tripsol_clean/frontend/profile_page.dart';
+import 'package:tripsol_clean/frontend/place_card.dart';
+import '../frontend/models/place_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,137 +16,155 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   List<Place> _recommendations = [];
+  List<Place> _popularPlaces = [];
   bool _isLoading = true;
-
-  final List<Place> _popularPlaces = [
-    Place(
-      title: 'Manali',
-      description: 'Himalayan getaway for snow and mountains',
-      imageUrl: 'https://www.india.com/wp-content/uploads/2019/11/Manali.png',
-    ),
-    Place(
-      title: 'Pondicherry',
-      description: 'French colonial vibes by the sea',
-      imageUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Pondicherry-Rock_beach_aerial_view.jpg/1200px-Pondicherry-Rock_beach_aerial_view.jpg',
-    ),
-    Place(
-      title: 'Leh-Ladakh',
-      description: 'Stunning high-altitude landscapes',
-      imageUrl:
-          'https://images.unsplash.com/photo-1606857090627-27ca46667290?fm=jpg',
-    ),
-  ];
+  bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
-    fetchRecommendations();
+    fetchData();
   }
 
-  Future<void> fetchRecommendations() async {
+  Future<void> fetchData() async {
+    setState(() {
+      _isLoading = true;
+      _hasError = false;
+    });
+
     try {
-      final recs = await ApiService.getRecommendedPlaces();
+      final recs = await ApiService.getRecommendations("top");
+      final popular =
+          await ApiService.getPopularPlace(); // Add this method if exists
+
       setState(() {
         _recommendations = recs;
+        _popularPlaces = popular;
         _isLoading = false;
+        _hasError = false;
       });
     } catch (e) {
-      print('API error: $e');
-      setState(() => _isLoading = false);
+      print('Error fetching data: $e'); // Fixed print here
+
+      setState(() {
+        _hasError = true;
+        _isLoading = false;
+      });
     }
   }
 
   Widget buildHomeContent() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (_hasError) {
+      return const Center(child: Text("Failed to load data. Try again later."));
+    }
+
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: ListView(
         children: [
           const Text(
             'Where to next, Hasini?',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
           ),
-          const SizedBox(height: 20),
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'Search destinations...',
-              prefixIcon: const Icon(Icons.search),
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide.none,
+          const SizedBox(height: 16),
+
+          // Search bar
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.15),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search destinations...',
+                prefixIcon: const Icon(Icons.search),
+                border: InputBorder.none,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               ),
             ),
           ),
-          const SizedBox(height: 20),
+
+          const SizedBox(height: 24),
+
+          // Recommended Section
           const Text(
             'Recommended for You',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
-          _isLoading
-              ? const Center(child: CircularProgressIndicator())
+          const SizedBox(height: 12),
+          _recommendations.isEmpty
+              ? const Text('No recommendations available.')
               : SizedBox(
-                  height: 220,
-                  child: ListView.builder(
+                  height: 230,
+                  child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: _recommendations.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 12),
                     itemBuilder: (context, index) {
                       final place = _recommendations[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: PlaceCard(
-                          title: place.title,
-                          description: place.description,
-                          imageUrl: place.imageUrl,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    PlaceDetailsPage(placeName: place.title),
-                              ),
-                            );
-                          },
-                        ),
+                      return PlaceCard(
+                        title: place.title,
+                        description: place.description,
+                        imageUrl: place.imageUrl,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PlaceDetailsPage(place: place),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
                 ),
-          const SizedBox(height: 20),
+
+          const SizedBox(height: 28),
+
+          // Popular Section
           const Text(
             'Popular Now',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
-          SizedBox(
-            height: 220,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _popularPlaces.length,
-              itemBuilder: (context, index) {
-                final place = _popularPlaces[index];
-                return Padding(
-                  padding: const EdgeInsets.only(right: 12),
-                  child: PlaceCard(
-                    title: place.title,
-                    description: place.description,
-                    imageUrl: place.imageUrl,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PlaceDetailsPage(placeName: place.title),
-                        ),
+          const SizedBox(height: 12),
+          _popularPlaces.isEmpty
+              ? const Text('No popular places found.')
+              : SizedBox(
+                  height: 230,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _popularPlaces.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 12),
+                    itemBuilder: (context, index) {
+                      final place = _popularPlaces[index];
+                      return PlaceCard(
+                        title: place.title,
+                        description: place.description,
+                        imageUrl: place.imageUrl,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PlaceDetailsPage(place: place),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
-                );
-              },
-            ),
-          ),
+                ),
         ],
       ),
     );
@@ -156,16 +175,14 @@ class _HomePageState extends State<HomePage> {
     final pages = [
       buildHomeContent(),
       const SavedTripsPage(),
-      const ProfilePage(
-        userEmail: "hasini@gmail.com",
-        savedTripsCount: 2, // mock value
-      ),
+      const ProfilePage(userEmail: "hasini@gmail.com", savedTripsCount: 2),
     ];
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("TripSol"),
         backgroundColor: Colors.teal,
+        elevation: 0,
       ),
       drawer: Drawer(
         child: ListView(

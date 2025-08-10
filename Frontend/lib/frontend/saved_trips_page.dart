@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tripsol_clean/screens/trip_detail_page.dart';
+import 'package:tripsol_clean/frontend/trip_detail_page.dart';
 import '../services/api_services.dart';
 
 class SavedTripsPage extends StatefulWidget {

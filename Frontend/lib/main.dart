@@ -1,17 +1,14 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tripsol_clean/screens/signUp_screen.dart';
-import 'screens/login_screen.dart';
-import 'screens/intro_page.dart';
-import 'screens/home_screen.dart';
-import 'package:tripsol_clean/screens/saved_trips_page.dart';
-import 'package:tripsol_clean/screens/profile_page.dart';
-import 'package:tripsol_clean/screens/settings_page.dart';
-import 'package:tripsol_clean/screens/about_app_page.dart';
+import 'package:tripsol_clean/frontend/signUp_screen.dart';
+import 'frontend/login_screen.dart';
+import 'frontend/intro_page.dart';
+import 'frontend/home_screen.dart';
+import 'package:tripsol_clean/frontend/saved_trips_page.dart';
+import 'package:tripsol_clean/frontend/profile_page.dart';
+import 'package:tripsol_clean/frontend/settings_page.dart';
+import 'package:tripsol_clean/frontend/about_app_page.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(const TripSolApp());
 }
 
@@ -31,7 +28,7 @@ class TripSolApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const IntroPage(),
-        '/login': (context) => const LoginScreen(),
+        '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUpScreen(),
         '/home': (context) => const HomePage(),
         '/profile': (context) => const ProfilePage(
