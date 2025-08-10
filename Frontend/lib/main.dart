@@ -32,8 +32,8 @@ class TripSolApp extends StatelessWidget {
         '/signup': (context) => const SignUpScreen(),
         '/home': (context) => const HomePage(),
         '/profile': (context) => const ProfilePage(
-          userEmail: "hasini@gmail.com", // mock
-          savedTripsCount: 2, // mock
+          userEmail: "hasini.narimetla@gmail.com",
+          savedTripsCount: 0,
         ),
         '/saved': (context) => const SavedTripsPage(),
         '/settings': (context) => const SettingsPage(),
