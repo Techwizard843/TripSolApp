@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     try {
-      final recs = await ApiService.getRecommendations("top");
+      final recs = await ApiService.getRecommendations();
       final popular =
           await ApiService.getPopularPlace(); // Add this method if exists
 

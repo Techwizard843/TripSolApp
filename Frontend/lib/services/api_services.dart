@@ -7,12 +7,9 @@ import '../frontend/models/hotel_model.dart';
 import '../frontend/models/food_model.dart';
 import '../frontend/models/weather_model.dart';
 import '../frontend/models/ml_model.dart';
-import '../frontend/models/trip_model.dart';
-
-const String baseUrl = 'https://tripsolapp.onrender.com';
 
 class ApiService {
-  static const String baseUrl = 'http://10.0.2.2:5001';
+  static const String baseUrl = 'https://tripsolapp.onrender.com';
 
   //Trip APIs
 
@@ -305,7 +302,7 @@ class ApiService {
     }
   }
 
-  static Future<List<Place>> getRecommendations(String userId) async {
+  static Future<List<Place>> getRecommendations() async {
     final url = Uri.parse('$baseUrl/recommendation');
     final response = await http.get(url);
 
