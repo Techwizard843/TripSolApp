@@ -303,7 +303,7 @@ class ApiService {
   }
 
   static Future<List<Place>> getRecommendations() async {
-    final url = Uri.parse('$baseUrl/recommendation');
+    final url = Uri.parse('https://4deab0d6ef71.ngrok-free.app/recommend');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
